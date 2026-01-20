@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+exchangelib
+sqlalchemy
+psycopg2-binary
+markdown
+python-dotenv
+pydantic
+pydantic-settings
