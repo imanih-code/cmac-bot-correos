@@ -1,8 +1,18 @@
 from fastapi import FastAPI
 from app.api.endpoints import email
-from app.core import config
+import asyncio
 
-app = FastAPI(title="CMAC Bot Correos API")
+from contextlib import asynccontextmanager
+
+from app.services.email_service import cleanup_expired_sessions
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    cleaner_task = asyncio.create_task(cleanup_expired_sessions())
+    yield
+    cleaner_task.cancel()
+
+app = FastAPI(title="CMAC Bot Correos API", lifespan=lifespan)
 
 app.include_router(email.router, prefix="/email", tags=["email"])
 
