@@ -13,10 +13,10 @@ class LoginRequest(BaseModel):
 class SendEmailRequest(BaseModel):
     session_id: str
     to_recipients: list[str]
-    cc_recipients: list[str]
+    cc_recipients: Optional[list[str]] = []
     subject: str
     html_body: str
-    attachments: list[tuple[str, bytes]]
+    attachments: Optional[list[tuple[str, bytes]]] = []
     save_copy: Optional[bool] = True
 
 class GetEmailRequest(BaseModel):
